@@ -212,3 +212,4 @@ max_price_by_symbol = {symbol: max(row["closing_price"] for row in grouped_rows)
 # # 该技术作用：
 # # （1）通过它清除噪声维度和整合高度相关的维度
 # # （2）提取出低维代表后，可以运用一系列不太适用于高维数据的技术
+# 加油！！
