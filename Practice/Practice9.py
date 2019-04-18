@@ -142,6 +142,73 @@ max_price_by_symbol = {symbol: max(row["closing_price"] for row in grouped_rows)
 # 使得每个维度均值都为0，标准差都为1
 
 
-# 10.5降维
-# 降维多用于维数很高的情形
-# 主成分分析（PCA）
+# # 10.5降维
+# # 降维多用于维数很高的情形
+# # 主成分分析（PCA）
+# # 首先将数据转换为每个维度均值为零的形式，去除均值，减去均值的意思
+# def de_mean_matrix(A):
+#     # shape读取矩阵长度
+#     nr, nc = shape(A)
+#     column_means, _ = scale(A)
+#     return make_matrix(nr, nc, lambda i, j: A[i][j] - column_means[j])
+#
+#
+# # 最能抓住数据最大变差的方向d（绝对值为1）
+# def direction(w):
+#     mag = magnitude(w)
+#     return [w_i / mag for w_i in w]
+#
+#
+# # 已知一个非零向量w，计算w方差上的方差
+# def directional_variance_i(x_i, w):
+#     return dot(x_i, direction(w)) ** 2
+#
+#
+# def directional_variance(X, w):
+#     return sum(directional_variance_i(x_i, w)
+#                for x_i in X)
+#
+#
+# # 使用梯度下降法计算出方差最大的方向
+# def directional_variance_gradient_i(x_i, w):
+#     projection_length = dot(x_i, direction(w))
+#     return [2 * projection_length * x_ij for x_ij in x_i]
+#
+#
+# def direction_variance_gradient(X, w):
+#     return vector_sum(directional_variance_gradient_i(x_i, w)
+#                       for x_i in X)
+#
+#
+# # 第一主成分是使函数directional_variance最大化方向
+# def first_principal_compoment(X):
+#     guess = [1 for _ in X[0]]
+#     unscaled_maximizer = maximize_batch(
+#         partial(directional_variance, X),  # 现在时w的一个函数
+#         partial(direction_variance_gradient, X),  # 现在是w的一个函数
+#         guess
+#     )
+#     return direction(unscaled_maximizer)
+#
+#
+# # 找到第一主成分的方向，就可以将数据在这个方向投影得到这个成分的值
+# def project(v, w):
+#     projection_length = dot(v, w)
+#     return scalar_multiply(projection_length, w)
+#
+#
+# # 想要得到其他成分，先从数据中移除投影
+# def remove_projection_from_vector(v, w):
+#     return vector_subtract(v, project(v, w))
+#
+#
+# def remove_projection(X, w):
+#     return [remove_projection_from_vector(x_i, w) for x_i in X]
+#
+#
+# # 更高维中，可以通过迭代找到我们所需的任意数目的主成分
+# # 然后再将原数据转换为由主成分生成的低维空间的点
+#
+# # 该技术作用：
+# # （1）通过它清除噪声维度和整合高度相关的维度
+# # （2）提取出低维代表后，可以运用一系列不太适用于高维数据的技术
