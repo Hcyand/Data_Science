@@ -1,4 +1,4 @@
-# 第五章：统计学
+# 第四和五章：统计学
 # 代码练习
 from collections import Counter
 import math
@@ -44,6 +44,16 @@ def data_range(x):
 
 
 # 方差练习
+# 向量相加
+def vector_add(v, w):
+    return [v_i + w_i for v_i, w_i in zip(v, w)]
+
+
+# 向量相减
+def vector_subtract(v, w):
+    return [v_i - w_i for v_i, w_i in zip(v, w)]
+
+
 # 点乘
 def dot(v, w):
     return sum(v_i * w_i for v_i, w_i in zip(v, w))
@@ -52,6 +62,20 @@ def dot(v, w):
 # 平方
 def sum_of_squares(v):
     return dot(v, v)
+
+
+# 计算向量的大小
+def magnitude(v):
+    return math.sqrt(sum_of_squares(v))
+
+
+# 两向量之间的距离
+def squared_distance(v, w):
+    return sum_of_squares(vector_subtract(v, w))
+
+
+def distance(v, w):
+    return math.sqrt(squared_distance(v, w))
 
 
 # x减平均值
