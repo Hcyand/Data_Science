@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 x = np.linspace(0, 1, 500)
 y = np.sin(4 * np.pi * x) * np.exp(-5 * x)
 fig, ax = plt.subplots()
+# zorder作用是确定层次
 ax.fill(x, y, zorder=10)
 # 画格子
 ax.grid(True, zorder=5)
