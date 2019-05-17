@@ -1,5 +1,5 @@
 """
-使用Apriori算法挖掘菜品订单关联规则
+使用Apriori算法挖掘菜品订单关联规则，算法
 """
 from __future__ import print_function
 from Data_Analysis_and_Mining.apriori import *  # 导入自行编导的apriori函数
