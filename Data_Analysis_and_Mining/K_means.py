@@ -2,7 +2,9 @@
 使用K-Means算法聚类消费行为特征数据
 """
 import pandas as pd
+from sklearn.manifold import TSNE
 from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
 
 inputfile = 'consumption_data.xls'
 outputfile = 'data_type.xls'
@@ -53,6 +55,22 @@ def density_plot(data):
     return plt
 
 
-pic_output = 'pd_'  # 概率密度图文件名前缀
-for i in range(k):
-    density_plot(data[r['聚类类别'] == i]).savefig('%s%s.png' % (pic_output, i))
+# pic_output = 'pd_'  # 概率密度图文件名前缀
+# for i in range(k):
+#     density_plot(data[r['聚类类别'] == i]).savefig('%s%s.png' % (pic_output, i))
+
+# 用TSNE进行数据降维并展示聚类结果
+tsne = TSNE()
+tsne.fit_transform(data_zs)  # 进行数据降维
+tsne = pd.DataFrame(tsne.embedding_, index=data_zs.index)  # 转换数据格式
+
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+d = tsne[r['聚类类别'] == 0]
+plt.plot(d[0], d[1], 'r.')
+d = tsne[r['聚类类别'] == 1]
+plt.plot(d[0], d[1], 'go')
+d = tsne[r['聚类类别'] == 2]
+plt.plot(d[0], d[1], 'b*')
+plt.show()
